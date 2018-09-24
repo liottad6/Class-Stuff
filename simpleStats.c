@@ -16,14 +16,14 @@ int main(){
 	double n, max, min, sum, mean;
 	char line[BUFSIZE];
 	int numsRead = 0;
-	int numOfItems = 1;  //This is because we scanned for n earlier
+	int numOfItems = 1;
 	n = -1;
 	max = n;
 	min = n;
 	sum = n;
 
 	while(n != 0 && fgets(line, BUFSIZE, stdin ) != NULL){
-		numsRead = sscanf(line, "%f", &n);
+		numsRead = sscanf(line, "%lf", &n);
 		if(numsRead == 1 && n != 0){
 			numOfItems++;
 			if(n > max)
