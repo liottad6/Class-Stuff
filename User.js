@@ -1,4 +1,3 @@
-
 /*
 * @author David Liotta
 * 10/2/18
@@ -9,6 +8,7 @@ main()
 function main(){
 
     var userList = [] //We need this to store all of our users
+    var userCount = 0;
 
     /*
     *   This is the standard user for our site.
@@ -19,6 +19,8 @@ function main(){
             this.userName = user;
             this.password = pass; //TODO want to store this as a hashed value for security
             this.email = email;
+            this.userNumber = userCount;
+            userCount++;
             var surveyList = [];
             var isAdmin = false;
             var userPic;
@@ -26,7 +28,7 @@ function main(){
         /*
          *   Allows Users to set their email
         */
-        setEmail(email){
+        changeEmail(email){
             this.email = email;
         }
                     
@@ -41,8 +43,7 @@ function main(){
         * Add the survey made to the user's list of surveys
         */
         createSurvey(survey){
-            //this.surveyList.push(survey)
-            this.sList++;               
+            this.surveyList.push(survey)              
         }
 
         /*
@@ -55,9 +56,11 @@ function main(){
         /**
          * Used to filter a user out of our userList
          */
-        deleteUser(userName){
-            if(this.isAdmin == true || this.userName == userName)
-                userList = userList.filter(item => item !== userName)
+        deleteUser(userNumber){
+        //    if(this.isAdmin == true || this.userName == userName)
+        //        userList = userList.filter(item => item !== userName)
+            delete userList[userNumber]
+            console.log("User #", userNumber, " removed")
         }
 
         toString(){
@@ -65,23 +68,6 @@ function main(){
         }
     }
 
-    /**
-     * This is code taken from Stack Overflow user Jared Forsyth
-     * The purpose of this code block is to create a function that hashes
-     * strings to a hash value since JS does not have an integrated hash function
-     */
-    String.prototype.hashCode = function() {
-        var hash = 0;
-        if (this.length == 0) {
-            return hash;
-        }
-        for (var i = 0; i < this.length; i++) {
-            var char = this.charCodeAt(i);
-            hash = ((hash<<5)-hash)+char;
-            hash = hash & hash; // Convert to 32bit integer
-        }
-        return hash;
-    }
 
     //TODO email duplication checking does not work yet
     //This and createAdmin could probably be one function
@@ -116,24 +102,26 @@ function main(){
     * A function uses to print out all of the usernames on our site
     */
     function printUsers(){
-        for(i = 0; i < userList.length; i++)
-            console.log(userList.indexOf(i).userName)
+        console.log(userList)
     }
     
     createAdmin("a1@users.com", "admin", "pass123", "pass123");
     createUser("u1@users.com", "user1", "pass456", "pass456");
     createUser("u2@users.com", "user2", "pass789", "pass789");
     createUser("u3@users.com", "user3", "pass012", "pass012");
-    createUser("u3@users.com", "user3", "pass789", "pass789");  //should not be able to create this user for due to repeated email
+    createUser("u3@users.com", "user3", "pass789", "pass789"); //should not be able to create this user for due to repeated email
     createUser("u4@users.com", "user4", "pass000", "wrong");  //should not be able to create this user for due passwords not matching
     
-    console.log(userList)
-    var admin = new User("fake@email.com", "radar", "stuff");
+    printUsers()
+
+    var admin = new User("fake@email.com", "myAdmin", "stuff", "stuff");
     admin.isAdmin = true;
 
-    admin.deleteUser(userList.user2)
+    admin.deleteUser(2)
 
-    console.log(userList)
+    printUsers()
+    console.log(admin)
+    admin.changeEmail("superfake@email.com")
+    console.log(admin)
 
 }
-
