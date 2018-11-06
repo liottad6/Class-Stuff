@@ -265,9 +265,9 @@ public class SDES
 	
 	// These will be used in the s blocks for comparison
 
-	private byte zero = 0000;
-	private byte one = 0001;
-	private byte two = 0010;
+	private boolean[] zero = new boolean[] {false, false, false, false};
+	private boolean[] one = new boolean[] {false, false, false, true}
+	private boolean[] two = new boolean[] {false, false, true, false}
 	private boolean[] three = new boolean[] {false, false, true, true};
 	private boolean[] four = new boolean[] {false, true, false, false};
 	private boolean[] five = new boolean[] {false, true, false, true};
